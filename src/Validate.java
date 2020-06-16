@@ -119,14 +119,14 @@ public class Validate{
         }
 
         // start threads
-        for (int i = 0; i < threads.length; i++) {
-            threads[i].start();
+        for (Thread thread : threads) {
+            thread.start();
         }
 
         // wait for threads to finish
-        for (int i = 0; i < threads.length; i++) {
+        for (Thread thread : threads) {
             try {
-                threads[i].join();
+                thread.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -171,8 +171,8 @@ public class Validate{
         System.out.println();
 
         // sudoku solution is invalid if there are any 0s in the valid array
-        for (int i = 0; i < valid.length; i++) {
-            if (!valid[i]) {
+        for (boolean validity : valid) {
+            if (!validity) {
                 System.out.println("Solution is invalid!");
                 return;
             }
