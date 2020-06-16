@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 
 public class SudokuPanel extends JPanel {
 
-    GridBagLayout GBLayout = new GridBagLayout();
     JTextField[][] cell;
 
      public SudokuPanel(int[][] sudoku){
