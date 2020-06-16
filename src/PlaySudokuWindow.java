@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -13,7 +11,6 @@ public class PlaySudokuWindow extends JFrame {
     JLabel nameLabel;
     JLabel timerLabel;
     JLabel timerNameLabel;
-    JButton quitButton;
     JButton backButton;
     JButton checkButton;
     JButton hintButton;
@@ -77,13 +74,10 @@ public class PlaySudokuWindow extends JFrame {
         backButton.setFocusable(false);
         backButton.setIcon(new ImageIcon("images/previous.png"));
         backButton.setIconTextGap(10);
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                HomeWindow homeWindow = new HomeWindow();
-                homeWindow.setVisible(true);
-                dispose();
-            }
+        backButton.addActionListener(e -> {
+            HomeWindow homeWindow = new HomeWindow();
+            homeWindow.setVisible(true);
+            dispose();
         });
 
         checkButton = new JButton("Check");
@@ -94,11 +88,8 @@ public class PlaySudokuWindow extends JFrame {
         checkButton.setFocusable(false);
         checkButton.setIcon(new ImageIcon("images/accept.png"));
         checkButton.setIconTextGap(10);
-        checkButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        checkButton.addActionListener(e -> {
 
-            }
         });
 
         hintButton = new JButton("Hint    ");
@@ -109,22 +100,19 @@ public class PlaySudokuWindow extends JFrame {
         hintButton.setFocusable(false);
         hintButton.setIcon(new ImageIcon("images/hint.png"));
         hintButton.setIconTextGap(10);
-        hintButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int[][] sudokuMatrix = {
-                        {5, 3, 4, 6, 7, 8, 9, 1, 2},
-                        {6, 7, 2, 1, 9, 5, 3, 4, 8},
-                        {1, 9, 8, 3, 4, 2, 5, 6, 7},
-                        {8, 5, 9, 7, 6, 1, 4, 2, 3},
-                        {4, 2, 6, 8, 5, 3, 7, 9, 1},
-                        {7, 1, 3, 9, 2, 4, 8, 5, 6},
-                        {9, 6, 1, 5, 3, 7, 2, 8, 4},
-                        {2, 8, 7, 4, 1, 9, 6, 3, 5},
-                        {3, 4, 5, 2, 8, 6, 1, 7, 9}};
-                Validate validate = new Validate(sudokuMatrix);
-                System.out.println("hintButton = " + validate.isValid());
-            }
+        hintButton.addActionListener(e -> {
+            int[][] sudokuMatrix = {
+                    {5, 3, 4, 6, 7, 8, 9, 1, 2},
+                    {6, 7, 2, 1, 9, 5, 3, 4, 8},
+                    {1, 9, 8, 3, 4, 2, 5, 6, 7},
+                    {8, 5, 9, 7, 6, 1, 4, 2, 3},
+                    {4, 2, 6, 8, 5, 3, 7, 9, 1},
+                    {7, 1, 3, 9, 2, 4, 8, 5, 6},
+                    {9, 6, 1, 5, 3, 7, 2, 8, 4},
+                    {2, 8, 7, 4, 1, 9, 6, 3, 5},
+                    {3, 4, 5, 2, 8, 6, 1, 7, 9}};
+            Validate validate = new Validate(sudokuMatrix);
+            System.out.println("hintButton = " + validate.isValid());
         });
 
         saveButton = new JButton("Save  ");
@@ -135,11 +123,8 @@ public class PlaySudokuWindow extends JFrame {
         saveButton.setFocusable(false);
         saveButton.setIcon(new ImageIcon("images/save.png"));
         saveButton.setIconTextGap(10);
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        saveButton.addActionListener(e -> {
 
-            }
         });
 
         backgroundImage.setBounds(0,0,600,600);

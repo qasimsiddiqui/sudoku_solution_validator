@@ -1,9 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.TimerTask;
-import java.util.Timer;
 
 import static javax.swing.UIManager.*;
 
@@ -64,25 +60,16 @@ public class HomeWindow extends JFrame {
         quitButton.setFocusable(false);
         quitButton.setIcon(new ImageIcon("images/delete.png"));
         quitButton.setIconTextGap(10);
-        quitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        quitButton.addActionListener(e -> System.exit(0));
 
         playSudokuButton = new JButton("Play Sudoku");
         playSudokuButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
         playSudokuButton.setForeground(Color.BLACK);
         playSudokuButton.setBackground(Color.WHITE);
-        playSudokuButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                createPlaySudokuScreen();
-                PlaySudokuWindow playSudokuWindow = new PlaySudokuWindow(width,height);
-                playSudokuWindow.setVisible(true);
-                dispose();
-            }
+        playSudokuButton.addActionListener(e -> {
+            PlaySudokuWindow playSudokuWindow = new PlaySudokuWindow(width,height);
+            playSudokuWindow.setVisible(true);
+            dispose();
         });
 
         completeSolutionButton = new JButton("Complete Solution");
