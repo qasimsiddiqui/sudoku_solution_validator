@@ -1,157 +1,184 @@
-import java.util.concurrent.Executors;
-
 public class Validate{
 
+    private static final int nThreads = 27;
     private static int[][] sudoku;
-    private static boolean valid;
-    private static boolean[] validRow;
-    private static boolean[] validColumn;
-    private static boolean[] valid3x3Grid;
+    private static boolean[] valid;
 
-    /**
-     * This class validates the sudoku passed by considering the elements range and uniqueness
-     * of every row, column and sub-squares
-     * @param sudokuMatrix the sudoku matrix that is to be validated
-     */
-    public Validate(int[][] sudokuMatrix) {
-        sudoku = sudokuMatrix;
-
-        int rowCount = sudokuMatrix.length;
-
-        //check for empty sudoku or an unequal rows and columns count
-        if(sudoku == null || rowCount != sudoku[0].length){
-            valid = false;
-        }
-        else {
-            //check that the elements of sudoku are between 0-9
-            if(!validateSudokuElements(rowCount)){
-                valid = false;
-            }
-
-            //check that no elements are repeated in each row, column and sub-square
-            if(!validateSudokuRules(rowCount)){
-                valid = false;
-            }
-        }
-    }
-
-    /**
-     * This method returns true if the sudoku matrix is valid
-     * @return boolean
-     */
-    public boolean isValid() {
-        return valid;
-    }
-
-    /**
-     * This method checks to make sure that all elements of sudoku
-     * are in range of 0-9
-     * @param count
-     */
-    private boolean validateSudokuElements (int count){
-        for(int i=0; i<count; i++){
-            for(int j=0; j<count; j++){
-                if(sudoku[i][j] < 1 || sudoku[i][j] > 9){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private boolean validateSudokuRules(int count){
-
-        Thread[] rowThreads = new Thread[count];
-        Thread[] columnThreads = new Thread[count];
-        Thread[] subSquareThreads = new Thread[count];
-
-        //create a thread for every row to check validity
-        for (int i=0; i<count; i++){
-            int finalI = i;
-            rowThreads[i] = new Thread(
-             //       new RowThread(sudoku, i)
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                int rowCount = sudoku.length;
-                                int sum = 0;
-
-                                for (int j = 0; j < rowCount; j++) {
-                                    sum += sudoku[finalI][j];
-                                }
-
-                                if (sum == 45) {
-                                    System.out.println(" Runnable = Valid");
-                                    validRow[finalI] = true;
-                                }
-                            } catch (Exception e) {
-                                System.out.println(e.getMessage());
-                            }
-                        }
-                    });
-            System.out.println("Thread name = " +rowThreads[i].getName() + "  ID = " + rowThreads[i].getId());
-        }
-
-//        for (int i=0; i<count; i++){
-//            rowThreads[i] = new Thread(new RowThread(i));
-//        }
-//
-//        for (int i=0; i<count; i++){
-//            rowThreads[i] = new Thread(new RowThread(i));
-//        }
-
-        for (int i=0; i<count; i++){
-            rowThreads[i].start();
-        }
-
-        for(int i=0; i<count; i++){
-            try{
-                rowThreads[i].join();
-                System.out.println("Row " +i + " :" + (valid ? " True" :" False"));
-            }
-            catch (InterruptedException e){
-                e.printStackTrace();
-            }
-        }
-
-        for(int i=0; i<count; i++){
-            if(validRow[i] == false){
-                System.out.println("validRow["+i+"]=" + validRow[i]);
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    class RowThread implements Runnable{
-
-        int[][] sudokuMatrix;
+    public static class RowColumn{
         int row;
+        int column;
 
-        RowThread(int[][] s,int r){
-            sudokuMatrix = s;
-            row = r;
-            validRow[row] = false;
+        public RowColumn(int row, int column){
+            this.row = row;
+            this.column = column;
+        }
+    }
+
+    public static class checkRow extends RowColumn implements Runnable{
+
+        public checkRow(int row, int column) {
+            super(row, column);
         }
 
         @Override
         public void run() {
-            int rowCount = sudokuMatrix.length;
-            int sum = 0;
-
-            for(int j=0; j<rowCount; j++){
-                sum += sudokuMatrix[row][j];
+            if(column != 0 || row > 8){
+                return;
             }
 
-            if(sum == 45){
-                validRow[row] = true;
+            boolean[] validRow = new boolean[9];
+
+            for(int i=0; i<9; i++){
+                int num = sudoku[row][i];
+                if (num<1 || num>9 || validRow[num-1]){
+                    return;
+                }
+                else if(!validRow[num-1]){
+                    validRow[num-1] = true;
+                }
+            }
+            valid[row + 9] = true;
+        }
+    }
+
+    // runnable object that checks for column validity
+    public static class checkColumn extends RowColumn implements Runnable {
+
+        checkColumn(int row, int column) {
+            super(row, column);
+        }
+
+        @Override
+        public void run() {
+            if (row != 0 || column > 8) {
+                return;
+            }
+            boolean[] validColumn = new boolean[9];
+            for (int i = 0; i < 9; i++) {
+                int num = sudoku[i][column];
+                if (num < 1 || num > 9 || validColumn[num - 1]) {
+                    return;
+                } else if (!validColumn[num - 1]) {
+                    validColumn[num - 1] = true;
+                }
+            }
+            // execute if col subsection is valid
+            valid[column + 18] = true;
+        }
+    }
+
+    // runnable object that checks for 3x3 grid validity
+    public static class check3x3 extends RowColumn implements Runnable {
+
+        check3x3(int row, int column) {
+            super(row, column);
+        }
+
+        @Override
+        public void run() {
+            // verify parameters
+            if (column % 3 != 0 || column > 6 || row > 6 || row % 3 != 0) {
+                return;
+            }
+            boolean[] valid3x3 = new boolean[9];
+
+            for (int i = row; i < row + 3; i++) {
+                for (int j = column; j < column + 3; j++) {
+
+                    int num = sudoku[i][j];
+                    if (num < 1 || num > 9 || valid3x3[num - 1]) {
+                        return;
+                    } else {
+                        valid3x3[num - 1] = true;
+                    }
+                }
+            }
+            // execute if 3x3 is valid
+            valid[column / 3 + row] = true;
+        }
+    }
+    public Validate(int[][] sudokuMatrix) {
+        sudoku = sudokuMatrix;
+        valid = new boolean[nThreads];
+
+        Thread[] threads = new Thread[nThreads];
+        int index=0;
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (j % 3 == 0 && i % 3 == 0) {
+                    threads[index++] = new Thread(new check3x3(i, j));
+                }
+                if (j == 0) {
+                    threads[index++] = new Thread(new checkRow(i, j));
+                }
+                if (i == 0) {
+                    threads[index++] = new Thread(new checkColumn(i, j));
+                }
             }
         }
+
+        // start threads
+        for (int i = 0; i < threads.length; i++) {
+            threads[i].start();
+        }
+
+        // wait for threads to finish
+        for (int i = 0; i < threads.length; i++) {
+            try {
+                threads[i].join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println();
+
+        // convert validity from boolean values to string values
+        String[] validStr = new String[valid.length];
+        for (int i = 0; i < valid.length; i++) {
+            if (valid[i]) {
+                validStr[i] = "valid";
+            } else {
+                validStr[i] = "invalid";
+            }
+        }
+
+        String[] subgrids = {"123", "456", "789"};
+
+        int index2 = 0;
+
+        // prints thread information for each 3x3 grid
+        for(int i=0; i<3; i++){
+            for(int j=0; j<3; j++){
+                System.out.println("Thread " + (index2 + 1) + ", Subgrid R"+subgrids[i]+"xC" + subgrids[j] + ", " + validStr[index2]);
+                index2++;
+            }
+        }
+
+        // prints thread information for each row
+        for (int i = 0; i < 9; i++) {
+            System.out.println("Thread " + (index2 + 1) + ", Row " + (i + 1) + ", " + validStr[index2]);
+            index2++;
+        }
+
+        // prints thread information for each column
+        for (int i = 0; i < 9; i++) {
+            System.out.println("Thread " + (index2 + 1) + ", Column " + (i + 1) + ", " + validStr[index2]);
+            index2++;
+        }
+
+        System.out.println();
+
+        // sudoku solution is invalid if there are any 0s in the valid array
+        for (int i = 0; i < valid.length; i++) {
+            if (!valid[i]) {
+                System.out.println("Solution is invalid!");
+                return;
+            }
+        }
+        System.out.println("Solution is valid!");
+
     }
 }
 

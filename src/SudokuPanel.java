@@ -39,6 +39,8 @@ public class SudokuPanel extends JPanel {
 
                 if (sudoku[i][j] != 0) {
                     cell[i][j].setText(Integer.toString(sudoku[i][j]));
+                }else{
+                    cell[i][j].setText("");
                 }
 
                 cell[i][j].setBounds((i*42)+5,(j*42)+5,40,40);
@@ -124,5 +126,20 @@ public class SudokuPanel extends JPanel {
                 });
             }
         }
+    }
+
+    int[][] getSudokuMatrix(){
+         int[][] sudoku = new int[9][9];
+         for(int i=0; i<9; i++){
+             for(int j=0; j<9; j++){
+                 if(cell[i][j].getText().equals("")){
+                     sudoku[i][j] = 0;
+                 } else{
+                     sudoku[i][j] = Integer.parseInt(cell[i][j].getText());
+                 }
+             }
+             System.out.println();
+         }
+         return sudoku;
     }
 }
