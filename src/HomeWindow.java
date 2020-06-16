@@ -46,7 +46,7 @@ public class HomeWindow extends JFrame {
         jPanel.setBounds(0,0,600,600);
 
         backgroundImage = new JLabel();
-        backgroundImage.setIcon(new ImageIcon("images/Grey1.jpg"));
+        backgroundImage.setIcon(new ImageIcon("assets/images/Grey1.jpg"));
 
         nameLabel = new JLabel("Sudoku Solution Validator");
         nameLabel.setFont(new Font("monospaced", Font.BOLD + Font.ITALIC, 35));
@@ -58,7 +58,7 @@ public class HomeWindow extends JFrame {
         quitButton.setBackground(Color.WHITE);
         quitButton.setBorder(null);
         quitButton.setFocusable(false);
-        quitButton.setIcon(new ImageIcon("images/delete.png"));
+        quitButton.setIcon(new ImageIcon("assets/images/delete.png"));
         quitButton.setIconTextGap(10);
         quitButton.addActionListener(e -> System.exit(0));
 
@@ -81,6 +81,11 @@ public class HomeWindow extends JFrame {
         checkSolutionButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
         checkSolutionButton.setForeground(Color.BLACK);
         checkSolutionButton.setBackground(Color.WHITE);
+        checkSolutionButton.addActionListener(e->{
+            CheckSolutionWindow checkSolutionWindow = new CheckSolutionWindow(width,height);
+            checkSolutionWindow.setVisible(true);
+            dispose();
+        });
 
         backgroundImage.setBounds(0,0,600,600);
         quitButton.setBounds(460,510,120,40);

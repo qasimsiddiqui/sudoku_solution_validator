@@ -1,25 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class PlaySudokuWindow extends JFrame {
+public class CheckSolutionWindow extends JFrame{
 
     SudokuPanel sudokuPanel;
     JPanel jPanel;
     JLabel backgroundImage;
     JLabel nameLabel;
-    JLabel timerLabel;
-    JLabel timerNameLabel;
     JButton backButton;
     JButton checkButton;
     JButton hintButton;
     JButton saveButton;
 
-    int second = 0;
-    int minute = 0;
-
-    public PlaySudokuWindow(int width, int height){
+    public CheckSolutionWindow(int width, int height){
         setTitle("Sudoku Solution Validator");
         setResizable(false);
         setLocation(width,height);
@@ -35,15 +28,15 @@ public class PlaySudokuWindow extends JFrame {
         jPanel.setBounds(0,0,600,600);
 
         int[][] sudoku = new int[][]{
-                {1, 0, 0, 0, 6, 0, 0, 0, 0},
-                {6, 0, 0, 5, 0, 0, 0, 0, 4},
-                {0, 2, 0, 4, 0, 0, 5, 0, 0},
-                {0, 8, 0, 0, 0, 5, 0, 0, 7},
-                {0, 0, 0, 0, 0, 0, 9, 3, 0},
-                {0, 0, 4, 3, 0, 0, 0, 0, 8},
-                {0, 9, 0, 0, 0, 7, 0, 5, 0},
-                {0, 7, 0, 0, 0, 0, 6, 0, 9},
-                {0, 0, 0, 1, 0, 0, 4, 0, 0}
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
 
         sudokuPanel = new SudokuPanel(sudoku);
@@ -53,17 +46,9 @@ public class PlaySudokuWindow extends JFrame {
         backgroundImage.setIcon(new ImageIcon("assets/images/Grey1.jpg"));
 
         nameLabel = new JLabel();
-        nameLabel.setText("Play Sudoku");
+        nameLabel.setText("Validate your Solution");
         nameLabel.setFont(new Font("monospaced", Font.BOLD + Font.ITALIC, 35));
         nameLabel.setForeground(Color.WHITE);
-
-        timerNameLabel = new JLabel("Time:");
-        timerNameLabel.setFont(new Font("monospaced", Font.BOLD, 25));
-        timerNameLabel.setForeground(Color.WHITE);
-
-        timerLabel = new JLabel("00:00");
-        timerLabel.setForeground(Color.WHITE);
-        timerLabel.setFont(new Font("Arial", Font.BOLD, 25));
 
         backButton = new JButton("Back");
         backButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
@@ -98,7 +83,7 @@ public class PlaySudokuWindow extends JFrame {
         hintButton.setBackground(Color.WHITE);
         hintButton.setBorder(null);
         hintButton.setFocusable(false);
-        hintButton.setIcon(new ImageIcon("images/hint.png"));
+        hintButton.setIcon(new ImageIcon("assets/images/hint.png"));
         hintButton.setIconTextGap(10);
         hintButton.addActionListener(e -> {
 
@@ -118,42 +103,20 @@ public class PlaySudokuWindow extends JFrame {
 
         backgroundImage.setBounds(0,0,600,600);
         backButton.setBounds(20,510,120,40);
-        nameLabel.setBounds(170,30,250,50);
-        timerNameLabel.setBounds(430,100,120,40);
-        timerLabel.setBounds(510,100,120,40);
         hintButton.setBounds(450,150,120,50);
         checkButton.setBounds(450,220,120,50);
         saveButton.setBounds(450,290,120,50);
         sudokuPanel.setBounds(30,90,385,385);
 
-        jPanel.add(timerNameLabel);
+
         jPanel.add(checkButton);
         jPanel.add(hintButton);
         jPanel.add(saveButton);
-        jPanel.add(timerLabel);
         jPanel.add(nameLabel);
         jPanel.add(sudokuPanel);
         jPanel.add(backButton);
         jPanel.add(backgroundImage);
         repaint();
 
-        startTimer();
-    }
-
-    void startTimer(){
-        java.util.Timer timer = new Timer();
-
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                second++;
-                if(second == 60){
-                    second = 0;
-                    minute++;
-                }
-                timerLabel.setText((minute < 10 ? "0"+minute : minute) + ":" + (second < 10 ? "0"+second : second));
-            }
-        };
-        timer.scheduleAtFixedRate(timerTask,1000,1000);
     }
 }

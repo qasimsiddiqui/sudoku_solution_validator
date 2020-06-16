@@ -4,20 +4,12 @@ public class Validate{
     private static int[][] sudoku;
     private static boolean[] valid;
 
-    public static class RowColumn{
-        int row;
-        int column;
-
-        public RowColumn(int row, int column){
-            this.row = row;
-            this.column = column;
-        }
-    }
-
-    public static class checkRow extends RowColumn implements Runnable{
+    public static class checkRow implements Runnable{
+        int row, column;
 
         public checkRow(int row, int column) {
-            super(row, column);
+            this.row = row;
+            this.column = column;
         }
 
         @Override
@@ -42,10 +34,13 @@ public class Validate{
     }
 
     // runnable object that checks for column validity
-    public static class checkColumn extends RowColumn implements Runnable {
+    public static class checkColumn implements Runnable {
+
+        int row, column;
 
         checkColumn(int row, int column) {
-            super(row, column);
+            this.row = row;
+            this.column = column;
         }
 
         @Override
@@ -68,10 +63,13 @@ public class Validate{
     }
 
     // runnable object that checks for 3x3 grid validity
-    public static class check3x3 extends RowColumn implements Runnable {
+    public static class check3x3 implements Runnable {
+
+        int row, column;
 
         check3x3(int row, int column) {
-            super(row, column);
+            this.row = row;
+            this.column = column;
         }
 
         @Override
