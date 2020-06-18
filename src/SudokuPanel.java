@@ -178,4 +178,12 @@ public class SudokuPanel extends JPanel {
             }
         }
     }
+
+    public void setValues(int[][] sudokuMatrix){
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                cell[i][j].setText(String.valueOf(sudokuMatrix[i][j]));
+            }
+        }
+    }
 }

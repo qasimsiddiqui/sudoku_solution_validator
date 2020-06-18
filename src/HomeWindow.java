@@ -10,7 +10,7 @@ public class HomeWindow extends JFrame {
     JLabel nameLabel;
     JButton quitButton;
     JButton playSudokuButton;
-    JButton completeSolutionButton;
+    JButton solveSolutionButton;
     JButton checkSolutionButton;
 
     public static void main(String[] args) {
@@ -72,10 +72,15 @@ public class HomeWindow extends JFrame {
             dispose();
         });
 
-        completeSolutionButton = new JButton("Complete Solution");
-        completeSolutionButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
-        completeSolutionButton.setForeground(Color.BLACK);
-        completeSolutionButton.setBackground(Color.WHITE);
+        solveSolutionButton = new JButton("Solve Solution");
+        solveSolutionButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
+        solveSolutionButton.setForeground(Color.BLACK);
+        solveSolutionButton.setBackground(Color.WHITE);
+        solveSolutionButton.addActionListener(e -> {
+            SolveSudokuWindow solveSudokuWindow = new SolveSudokuWindow(width,height);
+            solveSudokuWindow.setVisible(true);
+            dispose();
+        });
 
         checkSolutionButton = new JButton("Validate your Solution");
         checkSolutionButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
@@ -90,14 +95,14 @@ public class HomeWindow extends JFrame {
         backgroundImage.setBounds(0,0,600,600);
         quitButton.setBounds(460,510,120,40);
         playSudokuButton.setBounds(170,170,250,40);
-        completeSolutionButton.setBounds(170,230,250,40);
+        solveSolutionButton.setBounds(170,230,250,40);
         checkSolutionButton.setBounds(170,290,250,40);
         nameLabel.setBounds(35,30,540,50);
 
         jPanel.add(quitButton);
         jPanel.add(nameLabel);
         jPanel.add(playSudokuButton);
-        jPanel.add(completeSolutionButton);
+        jPanel.add(solveSolutionButton);
         jPanel.add(checkSolutionButton);
         jPanel.add(backgroundImage);
         repaint();
