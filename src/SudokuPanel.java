@@ -142,4 +142,40 @@ public class SudokuPanel extends JPanel {
          }
          return sudoku;
     }
+
+    void markAsInvalid(boolean[] valid){
+         boolean[] row = new boolean[9];
+         boolean[] column = new boolean[9];
+         boolean[] box3x3 = new boolean[9];
+
+         int index = 0;
+         for (int i = 0; i < 9; i++) {
+             box3x3[index] = valid[i];
+             index++;
+         }
+
+         index = 0;
+         for (int i = 9; i < 18; i++) {
+             row[index] = valid[i];
+             index++;
+         }
+
+        index = 0;
+        for (int i = 18; i < 27; i++) {
+            column[index] = valid[i];
+            index++;
+        }
+        int x;
+        int y;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                x = i - i%3;
+                y = j - j%3;
+                if(!row[i] && !column[j] && !box3x3[y/3 +x]){
+                    cell[i][j].setBorder(BorderFactory.createBevelBorder(0));
+                    cell[i][j].setBackground(new Color(0xE57B7E));
+                }
+            }
+        }
+    }
 }

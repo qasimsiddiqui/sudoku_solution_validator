@@ -100,7 +100,7 @@ public class Validate{
         valid = new boolean[nThreads];
 
         Thread[] threads = new Thread[nThreads];
-        int index=0;
+        int index = 0;
 
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -176,7 +176,10 @@ public class Validate{
             }
         }
         System.out.println("Solution is valid!");
+    }
 
+    boolean[] getValid(){
+        return valid;
     }
 }
 

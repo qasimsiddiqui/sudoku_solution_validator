@@ -27,18 +27,29 @@ public class CheckSolutionWindow extends JFrame{
         validate();
         jPanel.setBounds(0,0,600,600);
 
-        int[][] sudoku = new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0}
-        };
+//        int[][] sudoku = new int[][]{
+//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+//                {0, 0, 0, 0, 0, 0, 0, 0, 0},
+//                {0, 0, 0, 0, 0, 0, 0, 0, 0}
+//        };
 
+        int[][] sudoku = new int[][]{
+                {5, 3, 4, 6, 7, 8, 9, 1, 2},
+                {6, 7, 2, 1, 9, 5, 3, 4, 8},
+                {1, 9, 8, 3, 4, 2, 5, 6, 7},
+                {8, 5, 9, 7, 6, 1, 4, 2, 3},
+                {4, 2, 6, 8, 5, 3, 7, 9, 1},
+                {7, 1, 3, 9, 2, 4, 8, 5, 6},
+                {9, 6, 1, 5, 3, 7, 2, 8, 4},
+                {2, 8, 7, 4, 1, 9, 6, 3, 5},
+                {3, 4, 5, 2, 8, 6, 1, 7, 9}
+        };
         sudokuPanel = new SudokuPanel(sudoku);
 
 
@@ -75,6 +86,8 @@ public class CheckSolutionWindow extends JFrame{
         checkButton.addActionListener(e -> {
             int[][] sudokuPanelMatrix = sudokuPanel.getSudokuMatrix();
             Validate validate = new Validate(sudokuPanelMatrix);
+            boolean[] valid = validate.getValid();
+            sudokuPanel.markAsInvalid(valid);
         });
 
         hintButton = new JButton("Hint    ");
@@ -107,6 +120,7 @@ public class CheckSolutionWindow extends JFrame{
         checkButton.setBounds(450,220,120,50);
         saveButton.setBounds(450,290,120,50);
         sudokuPanel.setBounds(30,90,385,385);
+        nameLabel.setBounds(35,30,540,50);
 
 
         jPanel.add(checkButton);
@@ -117,6 +131,5 @@ public class CheckSolutionWindow extends JFrame{
         jPanel.add(backButton);
         jPanel.add(backgroundImage);
         repaint();
-
     }
 }

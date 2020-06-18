@@ -98,7 +98,7 @@ public class PlaySudokuWindow extends JFrame {
         hintButton.setBackground(Color.WHITE);
         hintButton.setBorder(null);
         hintButton.setFocusable(false);
-        hintButton.setIcon(new ImageIcon("images/hint.png"));
+        hintButton.setIcon(new ImageIcon("assets/images/hint.png"));
         hintButton.setIconTextGap(10);
         hintButton.addActionListener(e -> {
 
