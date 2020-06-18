@@ -53,8 +53,8 @@ public class PlaySudokuWindow extends JFrame {
         backgroundImage.setIcon(new ImageIcon("assets/images/Grey1.jpg"));
 
         nameLabel = new JLabel();
-        nameLabel.setText("Play Sudoku");
-        nameLabel.setFont(new Font("monospaced", Font.BOLD + Font.ITALIC, 35));
+        nameLabel.setText(" Play Sudoku ");
+        nameLabel.setFont(new Font("Satisfy", Font.BOLD, 50));
         nameLabel.setForeground(Color.WHITE);
 
         timerNameLabel = new JLabel("Time:");
@@ -90,6 +90,9 @@ public class PlaySudokuWindow extends JFrame {
         checkButton.addActionListener(e -> {
             int[][] sudokuPanelMatrix = sudokuPanel.getSudokuMatrix();
             Validate validate = new Validate(sudokuPanelMatrix);
+            if(!validate.isSudokuValid()){
+                JOptionPane.showMessageDialog(null,"Invalid Sudoku","INVALID SUDOKU",JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         hintButton = new JButton("Hint    ");
@@ -117,14 +120,14 @@ public class PlaySudokuWindow extends JFrame {
         });
 
         backgroundImage.setBounds(0,0,600,600);
-        backButton.setBounds(20,510,120,40);
-        nameLabel.setBounds(170,30,250,50);
-        timerNameLabel.setBounds(430,100,120,40);
-        timerLabel.setBounds(510,100,120,40);
-        hintButton.setBounds(450,150,120,50);
-        checkButton.setBounds(450,220,120,50);
-        saveButton.setBounds(450,290,120,50);
-        sudokuPanel.setBounds(30,90,385,385);
+        backButton.setBounds(30,510,120,40);
+        nameLabel.setBounds(150,20,310,70);
+        timerNameLabel.setBounds(430,150,120,40);
+        timerLabel.setBounds(510,150,120,40);
+        hintButton.setBounds(450,210,120,50);
+        checkButton.setBounds(450,280,120,50);
+        saveButton.setBounds(450,350,120,50);
+        sudokuPanel.setBounds(30,105,385,385);
 
         jPanel.add(timerNameLabel);
         jPanel.add(checkButton);

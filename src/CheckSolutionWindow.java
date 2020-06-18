@@ -10,7 +10,6 @@ public class CheckSolutionWindow extends JFrame{
     JButton backButton;
     JButton checkButton;
     JButton hintButton;
-    JButton saveButton;
 
     public CheckSolutionWindow(int width, int height){
         setTitle("Sudoku Solution Validator");
@@ -57,8 +56,8 @@ public class CheckSolutionWindow extends JFrame{
         backgroundImage.setIcon(new ImageIcon("assets/images/Grey1.jpg"));
 
         nameLabel = new JLabel();
-        nameLabel.setText("Validate your Solution");
-        nameLabel.setFont(new Font("monospaced", Font.BOLD + Font.ITALIC, 35));
+        nameLabel.setText(" Validate your Solution ");
+        nameLabel.setFont(new Font("Satisfy", Font.BOLD, 50));
         nameLabel.setForeground(Color.WHITE);
 
         backButton = new JButton("Back");
@@ -86,8 +85,15 @@ public class CheckSolutionWindow extends JFrame{
         checkButton.addActionListener(e -> {
             int[][] sudokuPanelMatrix = sudokuPanel.getSudokuMatrix();
             Validate validate = new Validate(sudokuPanelMatrix);
-            boolean[] valid = validate.getValid();
-            sudokuPanel.markAsInvalid(valid);
+            if(!validate.isSudokuValid()){
+                JOptionPane.showMessageDialog(null,"Invalid Sudoku","INVALID SUDOKU",JOptionPane.ERROR_MESSAGE);
+                boolean[] valid = validate.getValid();
+                sudokuPanel.markAsInvalid(valid);
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"You have entered a valid Sudoku Solution.\nCongratulations !!","Congratulations !!",JOptionPane.INFORMATION_MESSAGE);
+            }
+
         });
 
         hintButton = new JButton("Hint    ");
@@ -102,30 +108,16 @@ public class CheckSolutionWindow extends JFrame{
 
         });
 
-        saveButton = new JButton("Save  ");
-        saveButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
-        saveButton.setForeground(Color.BLACK);
-        saveButton.setBackground(Color.WHITE);
-        saveButton.setBorder(null);
-        saveButton.setFocusable(false);
-        saveButton.setIcon(new ImageIcon("assets/images/save.png"));
-        saveButton.setIconTextGap(10);
-        saveButton.addActionListener(e -> {
-
-        });
-
         backgroundImage.setBounds(0,0,600,600);
-        backButton.setBounds(20,510,120,40);
-        hintButton.setBounds(450,150,120,50);
-        checkButton.setBounds(450,220,120,50);
-        saveButton.setBounds(450,290,120,50);
-        sudokuPanel.setBounds(30,90,385,385);
-        nameLabel.setBounds(35,30,540,50);
+        backButton.setBounds(30,510,120,40);
+        hintButton.setBounds(450,240,120,50);
+        checkButton.setBounds(450,310,120,50);
+        sudokuPanel.setBounds(30,105,385,385);
+        nameLabel.setBounds(50,20,490,70);
 
 
         jPanel.add(checkButton);
         jPanel.add(hintButton);
-        jPanel.add(saveButton);
         jPanel.add(nameLabel);
         jPanel.add(sudokuPanel);
         jPanel.add(backButton);

@@ -95,41 +95,8 @@ public class Validate{
             valid[column / 3 + row] = true;
         }
     }
-    public Validate(int[][] sudokuMatrix) {
-        sudoku = sudokuMatrix;
-        valid = new boolean[nThreads];
 
-        Thread[] threads = new Thread[nThreads];
-        int index = 0;
-
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                if (j % 3 == 0 && i % 3 == 0) {
-                    threads[index++] = new Thread(new check3x3(i, j));
-                }
-                if (j == 0) {
-                    threads[index++] = new Thread(new checkRow(i, j));
-                }
-                if (i == 0) {
-                    threads[index++] = new Thread(new checkColumn(i, j));
-                }
-            }
-        }
-
-        // start threads
-        for (Thread thread : threads) {
-            thread.start();
-        }
-
-        // wait for threads to finish
-        for (Thread thread : threads) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
+    public void printSudoku(){
         System.out.println();
 
         // convert validity from boolean values to string values
@@ -168,14 +135,55 @@ public class Validate{
 
         System.out.println();
 
-        // sudoku solution is invalid if there are any 0s in the valid array
+        isSudokuValid();
+    }
+
+    // sudoku solution is invalid if there are any 0s in the valid array
+    public boolean isSudokuValid(){
         for (boolean validity : valid) {
             if (!validity) {
                 System.out.println("Solution is invalid!");
-                return;
+                return false;
             }
         }
         System.out.println("Solution is valid!");
+        return true;
+    }
+
+    public Validate(int[][] sudokuMatrix) {
+        sudoku = sudokuMatrix;
+        valid = new boolean[nThreads];
+
+        Thread[] threads = new Thread[nThreads];
+        int index = 0;
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (j % 3 == 0 && i % 3 == 0) {
+                    threads[index++] = new Thread(new check3x3(i, j));
+                }
+                if (j == 0) {
+                    threads[index++] = new Thread(new checkRow(i, j));
+                }
+                if (i == 0) {
+                    threads[index++] = new Thread(new checkColumn(i, j));
+                }
+            }
+        }
+
+        // start threads
+        for (Thread thread : threads) {
+            thread.start();
+        }
+
+        // wait for threads to finish
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     boolean[] getValid(){

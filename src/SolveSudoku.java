@@ -12,7 +12,7 @@ public class SolveSudoku {
 
     public boolean Solve() {
         // If all cells are taken, solution is found
-        if(!emptyCellExists())
+        if(!emptyCellExists() && validSudoku())
             return true;
 
         // go through the board and get empty cells
@@ -124,5 +124,11 @@ public class SolveSudoku {
             }
         }
         return false;
+    }
+
+    // Check the validity of the sudoku
+    private boolean validSudoku(){
+        Validate validate = new Validate(sudoku);
+        return validate.isSudokuValid();
     }
 }

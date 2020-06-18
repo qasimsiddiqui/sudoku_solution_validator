@@ -48,8 +48,8 @@ public class HomeWindow extends JFrame {
         backgroundImage = new JLabel();
         backgroundImage.setIcon(new ImageIcon("assets/images/Grey1.jpg"));
 
-        nameLabel = new JLabel("Sudoku Solution Validator");
-        nameLabel.setFont(new Font("monospaced", Font.BOLD + Font.ITALIC, 35));
+        nameLabel = new JLabel(" Sudoku Solution Validator");
+        nameLabel.setFont(new Font("Satisfy", Font.BOLD, 50));
         nameLabel.setForeground(Color.WHITE);
 
         quitButton = new JButton("Quit");
@@ -97,7 +97,7 @@ public class HomeWindow extends JFrame {
         playSudokuButton.setBounds(170,170,250,40);
         solveSolutionButton.setBounds(170,230,250,40);
         checkSolutionButton.setBounds(170,290,250,40);
-        nameLabel.setBounds(35,30,540,50);
+        nameLabel.setBounds(20,40,570,70);
 
         jPanel.add(quitButton);
         jPanel.add(nameLabel);

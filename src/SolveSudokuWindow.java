@@ -10,7 +10,6 @@ public class SolveSudokuWindow extends JFrame {
     JButton backButton;
     JButton checkButton;
     JButton solveButton;
-    JButton saveButton;
 
     public SolveSudokuWindow(int width, int height){
         setTitle("Sudoku Solution Validator");
@@ -57,8 +56,8 @@ public class SolveSudokuWindow extends JFrame {
         backgroundImage.setIcon(new ImageIcon("assets/images/Grey1.jpg"));
 
         nameLabel = new JLabel();
-        nameLabel.setText("Solve Sudoku");
-        nameLabel.setFont(new Font("monospaced", Font.BOLD + Font.ITALIC, 35));
+        nameLabel.setText(" Solve Sudoku ");
+        nameLabel.setFont(new Font("Satisfy", Font.BOLD , 50));
         nameLabel.setForeground(Color.WHITE);
 
         backButton = new JButton("Back");
@@ -106,30 +105,16 @@ public class SolveSudokuWindow extends JFrame {
                 JOptionPane.showMessageDialog(null, "Invalid Sudoku");
         });
 
-        saveButton = new JButton("Save  ");
-        saveButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
-        saveButton.setForeground(Color.BLACK);
-        saveButton.setBackground(Color.WHITE);
-        saveButton.setBorder(null);
-        saveButton.setFocusable(false);
-        saveButton.setIcon(new ImageIcon("assets/images/save.png"));
-        saveButton.setIconTextGap(10);
-        saveButton.addActionListener(e -> {
-
-        });
-
         backgroundImage.setBounds(0,0,600,600);
-        backButton.setBounds(20,510,120,40);
-        solveButton.setBounds(450,150,120,50);
-        checkButton.setBounds(450,220,120,50);
-        saveButton.setBounds(450,290,120,50);
-        sudokuPanel.setBounds(30,90,385,385);
-        nameLabel.setBounds(150,30,270,50);
+        backButton.setBounds(30,510,120,40);
+        solveButton.setBounds(450,240,120,50);
+        checkButton.setBounds(450,310,120,50);
+        sudokuPanel.setBounds(30,105,385,385);
+        nameLabel.setBounds(140,20,310,70);
 
 
         jPanel.add(checkButton);
         jPanel.add(solveButton);
-        jPanel.add(saveButton);
         jPanel.add(nameLabel);
         jPanel.add(sudokuPanel);
         jPanel.add(backButton);
