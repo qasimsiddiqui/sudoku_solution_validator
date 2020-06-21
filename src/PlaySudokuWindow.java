@@ -18,36 +18,23 @@ public class PlaySudokuWindow extends JFrame {
 
     int second = 0;
     int minute = 0;
+    int[][] sudoku;
 
-    public PlaySudokuWindow(int width, int height){
+    public PlaySudokuWindow(int width, int height, int[][] matrix) {
         setTitle("Sudoku Solution Validator");
         setResizable(false);
-        setLocation(width,height);
+        setLocation(width, height);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(600,600);
+        setSize(600, 600);
 
         jPanel = new JPanel();
         jPanel.setLayout(null);
-
         add(jPanel);
-
         validate();
-        jPanel.setBounds(0,0,600,600);
+        jPanel.setBounds(0, 0, 600, 600);
 
-        int[][] sudoku = new int[][]{
-                {1, 0, 0, 0, 6, 0, 0, 0, 0},
-                {6, 0, 0, 5, 0, 0, 0, 0, 4},
-                {0, 2, 0, 4, 0, 0, 5, 0, 0},
-                {0, 8, 0, 0, 0, 5, 0, 0, 7},
-                {0, 0, 0, 0, 0, 0, 9, 3, 0},
-                {0, 0, 4, 3, 0, 0, 0, 0, 8},
-                {0, 9, 0, 0, 0, 7, 0, 5, 0},
-                {0, 7, 0, 0, 0, 0, 6, 0, 9},
-                {0, 0, 0, 1, 0, 0, 4, 0, 0}
-        };
-
+        sudoku = matrix;
         sudokuPanel = new SudokuPanel(sudoku);
-
 
         backgroundImage = new JLabel();
         backgroundImage.setIcon(new ImageIcon("assets/images/Grey1.jpg"));
@@ -90,8 +77,8 @@ public class PlaySudokuWindow extends JFrame {
         checkButton.addActionListener(e -> {
             int[][] sudokuPanelMatrix = sudokuPanel.getSudokuMatrix();
             Validate validate = new Validate(sudokuPanelMatrix);
-            if(!validate.isSudokuValid()){
-                JOptionPane.showMessageDialog(null,"Invalid Sudoku","INVALID SUDOKU",JOptionPane.ERROR_MESSAGE);
+            if (!validate.isSudokuValid()) {
+                JOptionPane.showMessageDialog(null, "Invalid Sudoku", "INVALID SUDOKU", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -119,15 +106,15 @@ public class PlaySudokuWindow extends JFrame {
 
         });
 
-        backgroundImage.setBounds(0,0,600,600);
-        backButton.setBounds(30,510,120,40);
-        nameLabel.setBounds(150,20,310,70);
-        timerNameLabel.setBounds(430,150,120,40);
-        timerLabel.setBounds(510,150,120,40);
-        hintButton.setBounds(450,210,120,50);
-        checkButton.setBounds(450,280,120,50);
-        saveButton.setBounds(450,350,120,50);
-        sudokuPanel.setBounds(30,105,385,385);
+        backgroundImage.setBounds(0, 0, 600, 600);
+        backButton.setBounds(30, 510, 120, 40);
+        nameLabel.setBounds(150, 20, 310, 70);
+        timerNameLabel.setBounds(430, 150, 120, 40);
+        timerLabel.setBounds(510, 150, 120, 40);
+        hintButton.setBounds(450, 210, 120, 50);
+        checkButton.setBounds(450, 280, 120, 50);
+        saveButton.setBounds(450, 350, 120, 50);
+        sudokuPanel.setBounds(30, 105, 385, 385);
 
         jPanel.add(timerNameLabel);
         jPanel.add(checkButton);
@@ -143,20 +130,20 @@ public class PlaySudokuWindow extends JFrame {
         startTimer();
     }
 
-    void startTimer(){
+    void startTimer() {
         java.util.Timer timer = new Timer();
 
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 second++;
-                if(second == 60){
+                if (second == 60) {
                     second = 0;
                     minute++;
                 }
-                timerLabel.setText((minute < 10 ? "0"+minute : minute) + ":" + (second < 10 ? "0"+second : second));
+                timerLabel.setText((minute < 10 ? "0" + minute : minute) + ":" + (second < 10 ? "0" + second : second));
             }
         };
-        timer.scheduleAtFixedRate(timerTask,1000,1000);
+        timer.scheduleAtFixedRate(timerTask, 1000, 1000);
     }
 }
