@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -13,7 +15,7 @@ public class PlaySudokuWindow extends JFrame {
     JLabel timerLabel;
     JLabel timerNameLabel;
     JButton backButton;
-    JButton checkButton;
+    JButton submitButton;
     JButton hintButton;
     JButton saveButton;
 
@@ -67,18 +69,27 @@ public class PlaySudokuWindow extends JFrame {
             dispose();
         });
 
-        checkButton = new JButton("Check");
-        checkButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
-        checkButton.setForeground(Color.BLACK);
-        checkButton.setBackground(Color.WHITE);
-        checkButton.setBorder(null);
-        checkButton.setFocusable(false);
-        checkButton.setIcon(new ImageIcon("assets/images/accept.png"));
-        checkButton.setIconTextGap(10);
-        checkButton.addActionListener(e -> {
+        submitButton = new JButton("Submit");
+        submitButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
+        submitButton.setForeground(Color.BLACK);
+        submitButton.setBackground(Color.WHITE);
+        submitButton.setBorder(null);
+        submitButton.setFocusable(false);
+        submitButton.setIcon(new ImageIcon("assets/images/accept.png"));
+        submitButton.setIconTextGap(10);
+        submitButton.addActionListener(e -> {
             int[][] sudokuPanelMatrix = sudokuPanel.getSudokuMatrix();
             Validate validate = new Validate(sudokuPanelMatrix);
-            if (!validate.isSudokuValid()) {
+            if (validate.isSudokuValid()) {
+                int highScore = second + minute * 60;
+                try {
+                    BufferedWriter bw = new BufferedWriter(new FileWriter("assets/highScore.txt"));
+                    bw.write(Integer.toString(highScore));
+                    bw.close();
+                } catch (Exception exception) {
+                    // TODO: handle exception
+                }
+            } else {
                 JOptionPane.showMessageDialog(null, "Invalid Sudoku", "INVALID SUDOKU", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -92,7 +103,9 @@ public class PlaySudokuWindow extends JFrame {
         hintButton.setIcon(new ImageIcon("assets/images/hint.png"));
         hintButton.setIconTextGap(10);
         hintButton.addActionListener(e -> {
-
+            SolveSudoku solveSudoku = new SolveSudoku(sudokuPanel.getSudokuMatrix());
+            if (solveSudoku.isSolvable())
+                sudokuPanel.setHintonFocusedCell(solveSudoku.getSolvedSudoku());
         });
 
         saveButton = new JButton("Save  ");
@@ -113,12 +126,12 @@ public class PlaySudokuWindow extends JFrame {
         timerNameLabel.setBounds(430, 150, 120, 40);
         timerLabel.setBounds(510, 150, 120, 40);
         hintButton.setBounds(450, 210, 120, 50);
-        checkButton.setBounds(450, 280, 120, 50);
+        submitButton.setBounds(450, 280, 120, 50);
         saveButton.setBounds(450, 350, 120, 50);
         sudokuPanel.setBounds(30, 105, 385, 385);
 
         jPanel.add(timerNameLabel);
-        jPanel.add(checkButton);
+        jPanel.add(submitButton);
         jPanel.add(hintButton);
         jPanel.add(saveButton);
         jPanel.add(timerLabel);
