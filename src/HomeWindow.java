@@ -5,6 +5,7 @@ import static javax.swing.UIManager.*;
 
 public class HomeWindow extends JFrame {
 
+    private static final long serialVersionUID = -8035168904950092008L;
     JPanel jPanel;
     JLabel backgroundImage;
     JLabel nameLabel;

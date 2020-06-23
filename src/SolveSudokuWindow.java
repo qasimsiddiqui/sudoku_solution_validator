@@ -3,6 +3,7 @@ import java.awt.*;
 
 public class SolveSudokuWindow extends JFrame {
 
+    private static final long serialVersionUID = -3710508959772615577L;
     SudokuPanel sudokuPanel;
     JPanel jPanel;
     JLabel backgroundImage;

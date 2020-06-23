@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 public class PlaySudokuWindow extends JFrame {
 
+    private static final long serialVersionUID = 4683382057400604928L;
     SudokuPanel sudokuPanel;
     JPanel jPanel;
     JLabel backgroundImage;

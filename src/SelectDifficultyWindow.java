@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 
 public class SelectDifficultyWindow extends JFrame {
 
+    private static final long serialVersionUID = -3199890274435724350L;
     JPanel jPanel;
     JLabel backgroundImage;
     JLabel nameLabel;
