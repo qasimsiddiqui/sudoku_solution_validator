@@ -9,15 +9,16 @@ import java.util.regex.Pattern;
 
 public class SudokuPanel extends JPanel {
 
+    private static final long serialVersionUID = -6115150501496366604L;
     JTextField[][] cell;
 
-     public SudokuPanel(int[][] sudoku){
+    public SudokuPanel(int[][] sudoku) {
         setLayout(null);
         setBackground(Color.gray);
-        setSize(500,400);
+        setSize(500, 400);
         cell = new JTextField[9][9];
 
-        for(int i=0; i<9; i++) {
+        for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 cell[i][j] = new JTextField();
                 cell[i][j].setHorizontalAlignment(JTextField.CENTER);
@@ -39,11 +40,11 @@ public class SudokuPanel extends JPanel {
 
                 if (sudoku[i][j] != 0) {
                     cell[i][j].setText(Integer.toString(sudoku[i][j]));
-                }else{
+                } else {
                     cell[i][j].setText("");
                 }
 
-                cell[i][j].setBounds((i*42)+5,(j*42)+5,40,40);
+                cell[i][j].setBounds((i * 42) + 5, (j * 42) + 5, 40, 40);
                 add(cell[i][j]);
                 final int finalI = i;
                 final int finalJ = j;
@@ -59,13 +60,13 @@ public class SudokuPanel extends JPanel {
                         if (matcher.find()) {
                             cell[finalI][finalJ].setText(Character.toString(keyTyped));
                             keyEvent.consume();
-                        } else if(keyTyped == '0') {
+                        } else if (keyTyped == '0') {
                             cell[finalI][finalJ].setText("");
                             keyEvent.consume();
-                        }
-                        else{
+                        } else {
                             keyEvent.consume();
                         }
+                        highlightSameNumbers(cell[finalI][finalJ]);
                     }
 
                     @Override
@@ -82,25 +83,17 @@ public class SudokuPanel extends JPanel {
                 cell[i][j].addFocusListener(new FocusListener() {
                     @Override
                     public void focusGained(FocusEvent e) {
-                        cell[finalI][finalJ].setBorder(BorderFactory.createBevelBorder(0));
-                        for(int z=0;z<9;z++){
+                        for (int z = 0; z < 9; z++) {
                             cell[finalI][z].setBackground(new Color(0xB1CFE5));
                             cell[z][finalJ].setBackground(new Color(0xB1CFE5));
                         }
-                        String focusedText = cell[finalI][finalJ].getText();
-                        for(int x=0; x<9; x++){
-                            for(int y=0; y<9; y++){
-                                if(cell[x][y].getText().equals(focusedText)) {
-                                    cell[x][y].setForeground(Color.red);
-                                }
-                            }
-                        }
+                        highlightSameNumbers(cell[finalI][finalJ]);
                     }
 
                     @Override
                     public void focusLost(FocusEvent e) {
                         cell[finalI][finalJ].setBorder(null);
-                        for(int x=0; x<9; x++){
+                        for (int x = 0; x < 9; x++) {
                             for (int y = 0; y < 9; y++) {
                                 if (x > 2 && x < 6) {
                                     if (y > 2 && y < 6) {
@@ -117,8 +110,8 @@ public class SudokuPanel extends JPanel {
                                 }
                             }
                         }
-                        for(int z=0; z<9; z++){
-                            for(int y=0; y<9; y++){
+                        for (int z = 0; z < 9; z++) {
+                            for (int y = 0; y < 9; y++) {
                                 cell[z][y].setForeground(Color.BLACK);
                             }
                         }
@@ -128,50 +121,46 @@ public class SudokuPanel extends JPanel {
         }
     }
 
-    int[][] getSudokuMatrix(){
-         int[][] sudoku = new int[9][9];
-         for(int i=0; i<9; i++){
-             for(int j=0; j<9; j++){
-                 if(cell[i][j].getText().equals("")){
-                     sudoku[i][j] = 0;
-                 } else{
-                     sudoku[i][j] = Integer.parseInt(cell[i][j].getText());
-                 }
-             }
-             System.out.println();
-         }
-         return sudoku;
+    private void highlightSameNumbers(JTextField jTextField) {
+        for (int z = 0; z < 9; z++) {
+            for (int y = 0; y < 9; y++) {
+                cell[z][y].setForeground(Color.BLACK);
+            }
+        }
+        jTextField.setBorder(BorderFactory.createBevelBorder(0));
+        String focusedText = jTextField.getText();
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                if (cell[x][y].getText().equals(focusedText)) {
+                    cell[x][y].setForeground(Color.red);
+                }
+            }
+        }
     }
 
-    void markAsInvalid(boolean[] valid){
-//         boolean[] row = new boolean[9];
-//         boolean[] column = new boolean[9];
-//         boolean[] box3x3 = new boolean[9];
-//
-//         int index = 0;
-//         for (int i = 0; i < 9; i++) {
-//             box3x3[index] = valid[i];
-//             index++;
-//         }
-//
-//         index = 0;
-//         for (int i = 9; i < 18; i++) {
-//             row[index] = valid[i];
-//             index++;
-//         }
-//
-//        index = 0;
-//        for (int i = 18; i < 27; i++) {
-//            column[index] = valid[i];
-//            index++;
-//        }
+    int[][] getSudokuMatrix() {
+        int[][] sudoku = new int[9][9];
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (cell[i][j].getText().equals("")) {
+                    sudoku[i][j] = 0;
+                } else {
+                    sudoku[i][j] = Integer.parseInt(cell[i][j].getText());
+                }
+            }
+            System.out.println();
+        }
+        return sudoku;
+    }
+
+    void markAsInvalid(boolean[] valid) {
         int x;
         int y;
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                x = i - i%3;
-                y = j - j%3;
-                if(!valid[i+9] && !valid[j+18] && !valid[y/3 +x]){
+                x = i - i % 3;
+                y = j - j % 3;
+                if (!valid[i + 9] && !valid[j + 18] && !valid[y / 3 + x]) {
                     cell[i][j].setBorder(BorderFactory.createBevelBorder(0));
                     cell[i][j].setBackground(new Color(0xE57B7E));
                 }
@@ -179,10 +168,20 @@ public class SudokuPanel extends JPanel {
         }
     }
 
-    public void setValues(int[][] sudokuMatrix){
+    public void setValues(int[][] sudokuMatrix) {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 cell[i][j].setText(String.valueOf(sudokuMatrix[i][j]));
+            }
+        }
+    }
+
+    public void setHintonFocusedCell(int[][] matrix) {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (cell[i][j].isFocusOwner()) {
+                    cell[i][j].setText(String.valueOf(matrix[i][j]));
+                }
             }
         }
     }
