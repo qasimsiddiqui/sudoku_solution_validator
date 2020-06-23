@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,7 +24,13 @@ public class PlaySudokuWindow extends JFrame {
     int minute = 0;
     int[][] sudoku;
 
-    public PlaySudokuWindow(int width, int height, int[][] matrix) {
+    public PlaySudokuWindow(final int width, final int height, final int[][] matrix, int time) {
+        this(width, height, matrix);
+        minute = time / 60;
+        second = time % 60;
+    }
+
+    public PlaySudokuWindow(final int width, final int height, final int[][] matrix) {
         setTitle("Sudoku Solution Validator");
         setResizable(false);
         setLocation(width, height);
@@ -51,7 +58,7 @@ public class PlaySudokuWindow extends JFrame {
         timerNameLabel.setFont(new Font("monospaced", Font.BOLD, 25));
         timerNameLabel.setForeground(Color.WHITE);
 
-        timerLabel = new JLabel("00:00");
+        timerLabel = new JLabel((minute < 10 ? "0" + minute : minute) + ":" + (second < 10 ? "0" + second : second));
         timerLabel.setForeground(Color.WHITE);
         timerLabel.setFont(new Font("Arial", Font.BOLD, 25));
 
@@ -64,7 +71,7 @@ public class PlaySudokuWindow extends JFrame {
         backButton.setIcon(new ImageIcon("assets/images/previous.png"));
         backButton.setIconTextGap(10);
         backButton.addActionListener(e -> {
-            HomeWindow homeWindow = new HomeWindow();
+            final HomeWindow homeWindow = new HomeWindow();
             homeWindow.setVisible(true);
             dispose();
         });
@@ -78,15 +85,15 @@ public class PlaySudokuWindow extends JFrame {
         submitButton.setIcon(new ImageIcon("assets/images/accept.png"));
         submitButton.setIconTextGap(10);
         submitButton.addActionListener(e -> {
-            int[][] sudokuPanelMatrix = sudokuPanel.getSudokuMatrix();
-            Validate validate = new Validate(sudokuPanelMatrix);
+            final int[][] sudokuPanelMatrix = sudokuPanel.getSudokuMatrix();
+            final Validate validate = new Validate(sudokuPanelMatrix);
             if (validate.isSudokuValid()) {
-                int highScore = second + minute * 60;
+                final int highScore = second + minute * 60;
                 try {
-                    BufferedWriter bw = new BufferedWriter(new FileWriter("assets/highScore.txt"));
+                    final BufferedWriter bw = new BufferedWriter(new FileWriter("assets/highScore.txt"));
                     bw.write(Integer.toString(highScore));
                     bw.close();
-                } catch (Exception exception) {
+                } catch (final Exception exception) {
                     // TODO: handle exception
                 }
             } else {
@@ -103,7 +110,7 @@ public class PlaySudokuWindow extends JFrame {
         hintButton.setIcon(new ImageIcon("assets/images/hint.png"));
         hintButton.setIconTextGap(10);
         hintButton.addActionListener(e -> {
-            SolveSudoku solveSudoku = new SolveSudoku(sudokuPanel.getSudokuMatrix());
+            final SolveSudoku solveSudoku = new SolveSudoku(sudokuPanel.getSudokuMatrix());
             if (solveSudoku.isSolvable())
                 sudokuPanel.setHintonFocusedCell(solveSudoku.getSolvedSudoku());
         });
@@ -117,7 +124,29 @@ public class PlaySudokuWindow extends JFrame {
         saveButton.setIcon(new ImageIcon("assets/images/save.png"));
         saveButton.setIconTextGap(10);
         saveButton.addActionListener(e -> {
+            int n = JOptionPane.showConfirmDialog(this, "Do you want to Save and Quit?", "Save and Quit?",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
+            if (n == JOptionPane.YES_OPTION) {
+                int[][] sudokuPanelMatrix = sudokuPanel.getSudokuMatrix();
+                String temp = "";
+                for (int i = 0; i < 9; i++) {
+                    for (int j = 0; j < 9; j++) {
+                        temp += Integer.toString(sudokuPanelMatrix[i][j]);
+                    }
+                }
+                try {
+                    final BufferedWriter bw = new BufferedWriter(new FileWriter("assets/save.txt"));
+                    bw.write(temp);
+                    bw.write("\n");
+                    temp = Integer.toString(second + minute * 60);
+                    bw.write(temp);
+                    bw.close();
+                } catch (final IOException ex) {
+
+                }
+                dispose();
+            }
         });
 
         backgroundImage.setBounds(0, 0, 600, 600);
@@ -145,9 +174,9 @@ public class PlaySudokuWindow extends JFrame {
     }
 
     void startTimer() {
-        java.util.Timer timer = new Timer();
+        final java.util.Timer timer = new Timer();
 
-        TimerTask timerTask = new TimerTask() {
+        final TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 second++;
