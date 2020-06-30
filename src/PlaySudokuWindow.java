@@ -17,6 +17,8 @@ public class PlaySudokuWindow extends JFrame {
     JLabel nameLabel;
     JLabel timerLabel;
     JLabel timerNameLabel;
+    JLabel hintNameLabel;
+    JLabel hintLabel;
     JButton backButton;
     JButton submitButton;
     JButton hintButton;
@@ -24,15 +26,16 @@ public class PlaySudokuWindow extends JFrame {
 
     int second = 0;
     int minute = 0;
+    int hint = 0;
     int[][] sudoku;
 
-    public PlaySudokuWindow(final int width, final int height, final int[][] matrix, int time) {
-        this(width, height, matrix);
+    public PlaySudokuWindow(final int width, final int height, final int[][] matrix, int time, int NoOfHint) {
+        this(width, height, matrix, NoOfHint);
         minute = time / 60;
         second = time % 60;
     }
 
-    public PlaySudokuWindow(final int width, final int height, final int[][] matrix) {
+    public PlaySudokuWindow(final int width, final int height, final int[][] matrix, int NoOfHint) {
         setTitle("Sudoku Solution Validator");
         setResizable(false);
         setLocation(width, height);
@@ -45,6 +48,7 @@ public class PlaySudokuWindow extends JFrame {
         validate();
         jPanel.setBounds(0, 0, 600, 600);
 
+        hint = NoOfHint;
         sudoku = matrix;
         sudokuPanel = new SudokuPanel(sudoku);
 
@@ -55,6 +59,14 @@ public class PlaySudokuWindow extends JFrame {
         nameLabel.setText(" Play Sudoku ");
         nameLabel.setFont(new Font("Satisfy", Font.BOLD, 50));
         nameLabel.setForeground(Color.WHITE);
+
+        hintNameLabel = new JLabel("Hint:");
+        hintNameLabel.setFont(new Font("monospaced", Font.BOLD, 25));
+        hintNameLabel.setForeground(Color.WHITE);
+
+        hintLabel = new JLabel(hint < 10 ? "0" + Integer.toString(hint) : Integer.toString(hint));
+        hintLabel.setFont(new Font("monospaced", Font.BOLD, 25));
+        hintLabel.setForeground(Color.WHITE);
 
         timerNameLabel = new JLabel("Time:");
         timerNameLabel.setFont(new Font("monospaced", Font.BOLD, 25));
@@ -112,7 +124,7 @@ public class PlaySudokuWindow extends JFrame {
                     dispose();
                 } catch (final Exception exception) {
                     System.out.println(exception + ": " + exception.getMessage());
-                    JOptionPane.showMessageDialog(this, "High Score file not found.", "File Not Founs!",
+                    JOptionPane.showMessageDialog(this, "High Score file not found.", "File Not Found!",
                             JOptionPane.ERROR_MESSAGE);
                 }
             } else {
@@ -131,8 +143,19 @@ public class PlaySudokuWindow extends JFrame {
         hintButton.setIconTextGap(10);
         hintButton.addActionListener(e -> {
             final SolveSudoku solveSudoku = new SolveSudoku(sudokuPanel.getSudokuMatrix());
-            if (solveSudoku.isSolvable())
-                sudokuPanel.setHintonFocusedCell(solveSudoku.getSolvedSudoku());
+            if (solveSudoku.isSolvable()) {
+                if (hint == 0) {
+                    JOptionPane.showMessageDialog(this, "You have used all your hints.", "No more hints",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    hint--;
+                    hintLabel.setText(hint < 10 ? "0" + Integer.toString(hint) : Integer.toString(hint));
+                    sudokuPanel.setHintonFocusedCell(solveSudoku.getSolvedSudoku());
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "This sudoku is not valid.", "Invalid Sudoku",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         saveButton = new JButton("Save  ");
@@ -157,13 +180,16 @@ public class PlaySudokuWindow extends JFrame {
                 }
                 try {
                     final BufferedWriter bw = new BufferedWriter(new FileWriter("assets/save.txt"));
-                    bw.write(temp);
-                    bw.write("\n");
+                    bw.write(temp + "\n");
                     temp = Integer.toString(second + minute * 60);
+                    bw.write(temp + "\n");
+                    temp = Integer.toString(hint);
                     bw.write(temp);
                     bw.close();
                 } catch (final IOException ex) {
-
+                    System.out.println(ex + ": " + ex.getMessage());
+                    JOptionPane.showMessageDialog(this, "Game could not be saved. Restart the Game.", "Could not save!",
+                            JOptionPane.ERROR_MESSAGE);
                 }
                 dispose();
             }
@@ -174,9 +200,11 @@ public class PlaySudokuWindow extends JFrame {
         nameLabel.setBounds(150, 20, 310, 70);
         timerNameLabel.setBounds(430, 150, 120, 40);
         timerLabel.setBounds(510, 150, 120, 40);
-        hintButton.setBounds(450, 210, 120, 50);
-        submitButton.setBounds(450, 280, 120, 50);
-        saveButton.setBounds(450, 350, 120, 50);
+        hintNameLabel.setBounds(450, 190, 120, 40);
+        hintLabel.setBounds(525, 190, 120, 40);
+        hintButton.setBounds(450, 250, 120, 50);
+        submitButton.setBounds(450, 320, 120, 50);
+        saveButton.setBounds(450, 390, 120, 50);
         sudokuPanel.setBounds(30, 105, 385, 385);
 
         jPanel.add(timerNameLabel);
@@ -185,6 +213,8 @@ public class PlaySudokuWindow extends JFrame {
         jPanel.add(saveButton);
         jPanel.add(timerLabel);
         jPanel.add(nameLabel);
+        jPanel.add(hintNameLabel);
+        jPanel.add(hintLabel);
         jPanel.add(sudokuPanel);
         jPanel.add(backButton);
         jPanel.add(backgroundImage);

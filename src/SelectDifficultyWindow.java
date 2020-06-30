@@ -18,6 +18,7 @@ public class SelectDifficultyWindow extends JFrame {
     JButton resumeButton;
 
     int time = 0;
+    int hint = 0;
     int[][] matrix = new int[9][9];
 
     public SelectDifficultyWindow(int width, int height) {
@@ -55,9 +56,10 @@ public class SelectDifficultyWindow extends JFrame {
         easyButton.setForeground(Color.BLACK);
         easyButton.setBackground(Color.WHITE);
         easyButton.addActionListener(e -> {
+            hint = 10;
             GenerateSudoku generateSudoku = new GenerateSudoku();
             matrix = generateSudoku.createGame(GenerateSudoku.EASY);
-            PlaySudokuWindow playSudokuWindow = new PlaySudokuWindow(width, height, matrix);
+            PlaySudokuWindow playSudokuWindow = new PlaySudokuWindow(width, height, matrix, hint);
             playSudokuWindow.setVisible(true);
             dispose();
         });
@@ -93,9 +95,10 @@ public class SelectDifficultyWindow extends JFrame {
         normalButton.setForeground(Color.BLACK);
         normalButton.setBackground(Color.WHITE);
         normalButton.addActionListener(e -> {
+            hint = 5;
             GenerateSudoku generateSudoku = new GenerateSudoku();
             matrix = generateSudoku.createGame(GenerateSudoku.NORMAL);
-            PlaySudokuWindow playSudokuWindow = new PlaySudokuWindow(width, height, matrix);
+            PlaySudokuWindow playSudokuWindow = new PlaySudokuWindow(width, height, matrix, hint);
             playSudokuWindow.setVisible(true);
             dispose();
         });
@@ -131,9 +134,10 @@ public class SelectDifficultyWindow extends JFrame {
         hardButton.setForeground(Color.BLACK);
         hardButton.setBackground(Color.WHITE);
         hardButton.addActionListener(e -> {
+            hint = 0;
             GenerateSudoku generateSudoku = new GenerateSudoku();
             matrix = generateSudoku.createGame(GenerateSudoku.HARD);
-            PlaySudokuWindow playSudokuWindow = new PlaySudokuWindow(width, height, matrix);
+            PlaySudokuWindow playSudokuWindow = new PlaySudokuWindow(width, height, matrix, hint);
             playSudokuWindow.setVisible(true);
             dispose();
         });
@@ -170,7 +174,7 @@ public class SelectDifficultyWindow extends JFrame {
         resumeButton.setBackground(Color.WHITE);
         resumeButton.setEnabled(getSavedGame());
         resumeButton.addActionListener(e -> {
-            PlaySudokuWindow playSudokuWindow = new PlaySudokuWindow(width, height, matrix, time);
+            PlaySudokuWindow playSudokuWindow = new PlaySudokuWindow(width, height, matrix, time, hint);
             playSudokuWindow.setVisible(true);
             dispose();
         });
@@ -197,11 +201,13 @@ public class SelectDifficultyWindow extends JFrame {
         char[] sudokuLine = new char[81];
         String tempString = "";
         String timeString = "";
+        String hintString = "";
 
         try {
             BufferedReader br = new BufferedReader(new FileReader("assets/save.txt"));
             tempString = br.readLine();
             timeString = br.readLine();
+            hintString = br.readLine();
             br.close();
 
             sudokuLine = tempString.toCharArray();
@@ -213,6 +219,7 @@ public class SelectDifficultyWindow extends JFrame {
                 }
             }
             time = Integer.parseInt(timeString);
+            hint = Integer.parseInt(hintString);
             return true;
         } catch (Exception e) {
             System.out.println("The save File was not found.");
