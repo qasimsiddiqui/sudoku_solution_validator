@@ -164,7 +164,7 @@ public class SelectDifficultyWindow extends JFrame {
             }
         });
 
-        resumeButton = new JButton("Resume");
+        resumeButton = new JButton(getSavedGame() ? "Resume" : "No Saved Game");
         resumeButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
         resumeButton.setForeground(Color.BLACK);
         resumeButton.setBackground(Color.WHITE);
@@ -203,22 +203,20 @@ public class SelectDifficultyWindow extends JFrame {
             tempString = br.readLine();
             timeString = br.readLine();
             br.close();
+
+            sudokuLine = tempString.toCharArray();
+            int index = 0;
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    matrix[i][j] = Integer.parseInt(String.valueOf(sudokuLine[index]));
+                    index++;
+                }
+            }
+            time = Integer.parseInt(timeString);
+            return true;
         } catch (Exception e) {
             System.out.println("The save File was not found.");
             return false;
         }
-
-        sudokuLine = tempString.toCharArray();
-        int index = 0;
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                matrix[i][j] = Integer.parseInt(String.valueOf(sudokuLine[index]));
-                index++;
-            }
-        }
-
-        time = Integer.parseInt(timeString);
-
-        return true;
     }
 }
