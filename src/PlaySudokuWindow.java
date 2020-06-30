@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Timer;
@@ -90,14 +92,32 @@ public class PlaySudokuWindow extends JFrame {
             if (validate.isSudokuValid()) {
                 final int highScore = second + minute * 60;
                 try {
-                    final BufferedWriter bw = new BufferedWriter(new FileWriter("assets/highScore.txt"));
-                    bw.write(Integer.toString(highScore));
-                    bw.close();
+                    final BufferedReader br = new BufferedReader(new FileReader("assets/highScore.txt"));
+                    int oldHighScore = Integer.parseInt(br.readLine());
+                    br.close();
+
+                    if (highScore < oldHighScore) {
+                        String nameString = JOptionPane.showInputDialog(this, "Congratulation! You got the High Score!",
+                                "Enter Your Name", JOptionPane.INFORMATION_MESSAGE);
+                        final BufferedWriter bw = new BufferedWriter(new FileWriter("assets/highScore.txt"));
+                        bw.write(Integer.toString(highScore));
+                        bw.write("\n" + nameString);
+                        bw.close();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "You did not make the High score. Try again.", "Nice Game!",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    HomeWindow homeWindow = new HomeWindow();
+                    homeWindow.setVisible(true);
+                    dispose();
                 } catch (final Exception exception) {
-                    // TODO: handle exception
+                    System.out.println(exception + ": " + exception.getMessage());
+                    JOptionPane.showMessageDialog(this, "High Score file not found.", "File Not Founs!",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Invalid Sudoku", "INVALID SUDOKU", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "This sudoku is not valid.", "Invalid Sudoku",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 
