@@ -78,6 +78,7 @@ public class CheckSolutionWindow extends JFrame {
         checkButton.addActionListener(e -> {
             int[][] sudokuPanelMatrix = sudokuPanel.getSudokuMatrix();
             Validate validate = new Validate(sudokuPanelMatrix);
+            validate.printSudoku();
             if (!validate.isSudokuValid()) {
                 JOptionPane.showMessageDialog(null, "Invalid Sudoku", "INVALID SUDOKU", JOptionPane.ERROR_MESSAGE);
                 boolean[] valid = validate.getValid();
