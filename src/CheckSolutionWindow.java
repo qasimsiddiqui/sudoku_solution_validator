@@ -100,6 +100,10 @@ public class CheckSolutionWindow extends JFrame {
             Validate validate = new Validate(sudokuPanelMatrix);
             boolean[] valid = validate.getValid();
             sudokuPanel.markAsInvalid(valid);
+            if (validate.isSudokuValid()) {
+                JOptionPane.showMessageDialog(null, "You have entered a valid Sudoku Solution.\nCongratulations !!",
+                        "Congratulations !!", JOptionPane.INFORMATION_MESSAGE);
+            }
         });
 
         backgroundImage.setBounds(0, 0, 600, 600);
