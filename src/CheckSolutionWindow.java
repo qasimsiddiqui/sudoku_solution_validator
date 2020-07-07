@@ -81,13 +81,10 @@ public class CheckSolutionWindow extends JFrame {
             validate.printSudoku();
             if (!validate.isSudokuValid()) {
                 JOptionPane.showMessageDialog(null, "Invalid Sudoku", "INVALID SUDOKU", JOptionPane.ERROR_MESSAGE);
-                boolean[] valid = validate.getValid();
-                sudokuPanel.markAsInvalid(valid);
             } else {
                 JOptionPane.showMessageDialog(null, "You have entered a valid Sudoku Solution.\nCongratulations !!",
                         "Congratulations !!", JOptionPane.INFORMATION_MESSAGE);
             }
-
         });
 
         hintButton = new JButton("Hint    ");
@@ -99,7 +96,10 @@ public class CheckSolutionWindow extends JFrame {
         hintButton.setIcon(new ImageIcon("assets/images/hint.png"));
         hintButton.setIconTextGap(10);
         hintButton.addActionListener(e -> {
-
+            int[][] sudokuPanelMatrix = sudokuPanel.getSudokuMatrix();
+            Validate validate = new Validate(sudokuPanelMatrix);
+            boolean[] valid = validate.getValid();
+            sudokuPanel.markAsInvalid(valid);
         });
 
         backgroundImage.setBounds(0, 0, 600, 600);

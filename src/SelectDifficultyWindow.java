@@ -81,7 +81,7 @@ public class SelectDifficultyWindow extends JFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                easyButton.setBackground(Color.BLUE);
+                easyButton.setBackground(new Color(0x81ABE5));
             }
 
             @Override

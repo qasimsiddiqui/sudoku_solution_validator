@@ -125,6 +125,7 @@ public class SudokuPanel extends JPanel {
         for (int z = 0; z < 9; z++) {
             for (int y = 0; y < 9; y++) {
                 cell[z][y].setForeground(Color.BLACK);
+                cell[z][y].setBorder(null);
             }
         }
         jTextField.setBorder(BorderFactory.createBevelBorder(0));
@@ -132,7 +133,8 @@ public class SudokuPanel extends JPanel {
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
                 if (cell[x][y].getText().equals(focusedText)) {
-                    cell[x][y].setForeground(Color.red);
+                    cell[x][y].setForeground(new Color(0xcc5421));
+                    cell[x][y].setBorder(BorderFactory.createBevelBorder(0));
                 }
             }
         }
