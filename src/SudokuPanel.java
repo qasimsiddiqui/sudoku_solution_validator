@@ -133,7 +133,7 @@ public class SudokuPanel extends JPanel {
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
                 if (cell[x][y].getText().equals(focusedText)) {
-                    cell[x][y].setForeground(new Color(0x21a4cc));
+                    cell[x][y].setForeground(new Color(0x177d9c));
                     cell[x][y].setBorder(BorderFactory.createBevelBorder(0));
                 }
             }
