@@ -50,11 +50,11 @@ public class HomeWindow extends JFrame {
         backgroundImage.setIcon(new ImageIcon("assets/images/Grey1.jpg"));
 
         nameLabel = new JLabel(" Sudoku Solution Validator");
-        nameLabel.setFont(new Font("Satisfy", Font.BOLD, 50));
+        nameLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         nameLabel.setForeground(Color.WHITE);
 
         quitButton = new JButton("Quit");
-        quitButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
+        quitButton.setFont(new Font("Monospaced", Font.BOLD, 20));
         quitButton.setForeground(Color.BLACK);
         quitButton.setBackground(Color.WHITE);
         quitButton.setBorder(null);
@@ -64,7 +64,7 @@ public class HomeWindow extends JFrame {
         quitButton.addActionListener(e -> System.exit(0));
 
         playSudokuButton = new JButton("Play Sudoku");
-        playSudokuButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
+        playSudokuButton.setFont(new Font("Monospaced", Font.BOLD, 20));
         playSudokuButton.setForeground(Color.BLACK);
         playSudokuButton.setBackground(Color.WHITE);
         playSudokuButton.addActionListener(e -> {
@@ -74,7 +74,7 @@ public class HomeWindow extends JFrame {
         });
 
         solveSolutionButton = new JButton("Solve Solution");
-        solveSolutionButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
+        solveSolutionButton.setFont(new Font("Monospaced", Font.BOLD, 20));
         solveSolutionButton.setForeground(Color.BLACK);
         solveSolutionButton.setBackground(Color.WHITE);
         solveSolutionButton.addActionListener(e -> {
@@ -84,7 +84,7 @@ public class HomeWindow extends JFrame {
         });
 
         checkSolutionButton = new JButton("Validate your Solution");
-        checkSolutionButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
+        checkSolutionButton.setFont(new Font("Monospaced", Font.BOLD, 20));
         checkSolutionButton.setForeground(Color.BLACK);
         checkSolutionButton.setBackground(Color.WHITE);
         checkSolutionButton.addActionListener(e -> {
@@ -95,9 +95,9 @@ public class HomeWindow extends JFrame {
 
         backgroundImage.setBounds(0, 0, 600, 600);
         quitButton.setBounds(460, 510, 120, 40);
-        playSudokuButton.setBounds(170, 170, 250, 40);
-        solveSolutionButton.setBounds(170, 230, 250, 40);
-        checkSolutionButton.setBounds(170, 290, 250, 40);
+        playSudokuButton.setBounds(150, 170, 300, 40);
+        solveSolutionButton.setBounds(150, 230, 300, 40);
+        checkSolutionButton.setBounds(150, 290, 300, 40);
         nameLabel.setBounds(20, 40, 570, 70);
 
         jPanel.add(quitButton);

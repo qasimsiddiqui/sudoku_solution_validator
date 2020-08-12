@@ -57,19 +57,19 @@ public class PlaySudokuWindow extends JFrame {
 
         nameLabel = new JLabel();
         nameLabel.setText(" Play Sudoku ");
-        nameLabel.setFont(new Font("Satisfy", Font.BOLD, 50));
+        nameLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         nameLabel.setForeground(Color.WHITE);
 
         hintNameLabel = new JLabel("Hint:");
-        hintNameLabel.setFont(new Font("monospaced", Font.BOLD, 25));
+        hintNameLabel.setFont(new Font("Monospaced", Font.BOLD, 25));
         hintNameLabel.setForeground(Color.WHITE);
 
         hintLabel = new JLabel(hint < 10 ? "0" + Integer.toString(hint) : Integer.toString(hint));
-        hintLabel.setFont(new Font("monospaced", Font.BOLD, 25));
+        hintLabel.setFont(new Font("Monospaced", Font.BOLD, 25));
         hintLabel.setForeground(Color.WHITE);
 
         timerNameLabel = new JLabel("Time:");
-        timerNameLabel.setFont(new Font("monospaced", Font.BOLD, 25));
+        timerNameLabel.setFont(new Font("Monospaced", Font.BOLD, 25));
         timerNameLabel.setForeground(Color.WHITE);
 
         timerLabel = new JLabel((minute < 10 ? "0" + minute : minute) + ":" + (second < 10 ? "0" + second : second));
@@ -77,7 +77,7 @@ public class PlaySudokuWindow extends JFrame {
         timerLabel.setFont(new Font("Arial", Font.BOLD, 25));
 
         backButton = new JButton("Back");
-        backButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
+        backButton.setFont(new Font("Monospaced", Font.BOLD, 20));
         backButton.setForeground(Color.BLACK);
         backButton.setBackground(Color.WHITE);
         backButton.setBorder(null);
@@ -91,7 +91,7 @@ public class PlaySudokuWindow extends JFrame {
         });
 
         submitButton = new JButton("Submit");
-        submitButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
+        submitButton.setFont(new Font("Monospaced", Font.BOLD, 20));
         submitButton.setForeground(Color.BLACK);
         submitButton.setBackground(Color.WHITE);
         submitButton.setBorder(null);
@@ -133,8 +133,8 @@ public class PlaySudokuWindow extends JFrame {
             }
         });
 
-        hintButton = new JButton("Hint    ");
-        hintButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
+        hintButton = new JButton("Hint ");
+        hintButton.setFont(new Font("Monospaced", Font.BOLD, 20));
         hintButton.setForeground(Color.BLACK);
         hintButton.setBackground(Color.WHITE);
         hintButton.setBorder(null);
@@ -158,8 +158,8 @@ public class PlaySudokuWindow extends JFrame {
             }
         });
 
-        saveButton = new JButton("Save  ");
-        saveButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
+        saveButton = new JButton("Save");
+        saveButton.setFont(new Font("Monospaced", Font.BOLD, 20));
         saveButton.setForeground(Color.BLACK);
         saveButton.setBackground(Color.WHITE);
         saveButton.setBorder(null);

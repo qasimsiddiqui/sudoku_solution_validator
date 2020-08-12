@@ -58,11 +58,11 @@ public class SolveSudokuWindow extends JFrame {
 
         nameLabel = new JLabel();
         nameLabel.setText(" Solve Sudoku ");
-        nameLabel.setFont(new Font("Satisfy", Font.BOLD , 50));
+        nameLabel.setFont(new Font("Monospaced", Font.BOLD , 35));
         nameLabel.setForeground(Color.WHITE);
 
         backButton = new JButton("Back");
-        backButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
+        backButton.setFont(new Font("Monospaced", Font.BOLD, 20));
         backButton.setForeground(Color.BLACK);
         backButton.setBackground(Color.WHITE);
         backButton.setBorder(null);
@@ -76,7 +76,7 @@ public class SolveSudokuWindow extends JFrame {
         });
 
         checkButton = new JButton("Check");
-        checkButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
+        checkButton.setFont(new Font("Monospaced", Font.BOLD, 20));
         checkButton.setForeground(Color.BLACK);
         checkButton.setBackground(Color.WHITE);
         checkButton.setBorder(null);
@@ -90,8 +90,8 @@ public class SolveSudokuWindow extends JFrame {
             sudokuPanel.markAsInvalid(valid);
         });
 
-        solveButton = new JButton("Solve   ");
-        solveButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
+        solveButton = new JButton("Solve");
+        solveButton.setFont(new Font("Monospaced", Font.BOLD, 20));
         solveButton.setForeground(Color.BLACK);
         solveButton.setBackground(Color.WHITE);
         solveButton.setBorder(null);

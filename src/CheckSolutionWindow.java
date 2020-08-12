@@ -50,11 +50,11 @@ public class CheckSolutionWindow extends JFrame {
 
         nameLabel = new JLabel();
         nameLabel.setText(" Validate your Solution ");
-        nameLabel.setFont(new Font("Satisfy", Font.BOLD, 50));
+        nameLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         nameLabel.setForeground(Color.WHITE);
 
         backButton = new JButton("Back");
-        backButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
+        backButton.setFont(new Font("Monospaced", Font.BOLD, 20));
         backButton.setForeground(Color.BLACK);
         backButton.setBackground(Color.WHITE);
         backButton.setBorder(null);
@@ -68,7 +68,7 @@ public class CheckSolutionWindow extends JFrame {
         });
 
         checkButton = new JButton("Check");
-        checkButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
+        checkButton.setFont(new Font("Monospaced", Font.BOLD, 20));
         checkButton.setForeground(Color.BLACK);
         checkButton.setBackground(Color.WHITE);
         checkButton.setBorder(null);
@@ -87,8 +87,8 @@ public class CheckSolutionWindow extends JFrame {
             }
         });
 
-        hintButton = new JButton("Hint    ");
-        hintButton.setFont(new Font("Bradley Hand ITC", Font.BOLD, 20));
+        hintButton = new JButton("Hint  ");
+        hintButton.setFont(new Font("Monospaced", Font.BOLD, 20));
         hintButton.setForeground(Color.BLACK);
         hintButton.setBackground(Color.WHITE);
         hintButton.setBorder(null);
@@ -111,7 +111,7 @@ public class CheckSolutionWindow extends JFrame {
         hintButton.setBounds(450, 240, 120, 50);
         checkButton.setBounds(450, 310, 120, 50);
         sudokuPanel.setBounds(30, 105, 385, 385);
-        nameLabel.setBounds(50, 20, 490, 70);
+        nameLabel.setBounds(40, 20, 530, 70);
 
         jPanel.add(checkButton);
         jPanel.add(hintButton);
