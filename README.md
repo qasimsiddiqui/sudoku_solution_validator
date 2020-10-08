@@ -1,4 +1,4 @@
-#Sudoku Solution Validator
+# Sudoku Solution Validator
 
 Operating Systems course project using multi threading
 
